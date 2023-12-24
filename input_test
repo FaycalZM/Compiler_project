@@ -1,0 +1,21 @@
+MAIN_PROG{
+
+	/*ce programme remplit une table avec des entrées de l’utilisateur,et les affiche*/
+
+	str[10] tableau;
+
+	int i;
+
+	use i in range(10){
+
+		input(tableau[i]);
+
+	}
+
+	use i in range(10){
+
+		output(tableau[i]);
+
+	}
+
+}
