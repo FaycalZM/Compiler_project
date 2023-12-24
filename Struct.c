@@ -44,22 +44,16 @@ Line* allocateLine(){
 }
 
 Line* insertLine(Line **line , int numLine){
-        Line *li ;
+        Line *li = *line;
         Line *newLine;
-        if(*line==NULL){
-            newLine = allocateLine();
-            return newLine;
-        }else{
-            li = *line;
-            while (li->suivL!=NULL)
-            {
-                li = li->suivL;
-            }
-            newLine = allocateLine();
-            li->suivL=newLine;
-            newLine->numLine=numLine;
-            return newLine;    
+        while (li->suivL!=NULL)
+        {
+           li = li->suivL;
         }
+        newLine = allocateLine();
+        li->suivL=newLine;
+        newLine->numLine=numLine;
+        return newLine;    
 }
 
 

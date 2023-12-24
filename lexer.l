@@ -10,7 +10,9 @@
     int currentLineNum = 1; 	    
     int showsuccess = 1;
     
-    Line* symbolTable = NULL;
+    Line* symbolTable;
+    Line* currentLine;
+    
     
     
     void yysuccess(const char *s, const char *token, int length);
@@ -74,7 +76,7 @@ DECREMENT --
 
 
 /*Elementary instructions*/
-ASSIGNMENT =
+ASSIGN =
 
 /*Constant strings and numbers*/
 NUMBER ([1-9][0-9]*|"0")
@@ -99,21 +101,21 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 %%
 
 {PROG} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "main_prog",yytext,"",currentColumnNum);
     yysuccess("main_program", yytext, yyleng);
     currentColumnNum +=yyleng;    
 }
 
 {L_FOR} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "for_loop",yytext,"",currentColumnNum);
     yysuccess("for", yytext, yyleng);
     currentColumnNum +=yyleng;
     
 }
 {L_WHILE} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "while_loop",yytext,"",currentColumnNum);
     yysuccess("while", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -121,7 +123,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {INPUT} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "read",yytext,"",currentColumnNum);
     yysuccess("input", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -129,7 +131,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {OUTPUT} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "write",yytext,"",currentColumnNum);
     yysuccess("output", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -137,7 +139,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {IF} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "if",yytext,"",currentColumnNum);
     yysuccess("check", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -145,7 +147,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {ELSE} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "else",yytext,"",currentColumnNum);
     yysuccess("else", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -155,7 +157,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 
 
 {DOT} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "dot",yytext,"",currentColumnNum);
     yysuccess("dot", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -163,7 +165,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {COMMA} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "comma",yytext,"",currentColumnNum);
     yysuccess("comma", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -172,7 +174,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {SEMICOLON} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "semicolon",yytext,"",currentColumnNum);
     yysuccess("semicolon", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -181,7 +183,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {OPENINGPARENTHESIS} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "opening_parenthesis",yytext,"",currentColumnNum);
     yysuccess("opening_parenthesis", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -189,7 +191,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {CLOSINGPARENTHESIS} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "closing_parenthesis",yytext,"",currentColumnNum);
     yysuccess("closing_parenthesis", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -197,7 +199,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {OPENINGBRACE} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "opening_brace",yytext,"",currentColumnNum);
     yysuccess("opening_brace", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -205,7 +207,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {CLOSINGBRACE} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "closing_brace",yytext,"",currentColumnNum);
     yysuccess("closing_brace", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -213,7 +215,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {OPENINGBRACKET} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "opening_bracket",yytext,"",currentColumnNum);
     yysuccess("opening_bracket", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -221,7 +223,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {CLOSINGBRACKET} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "closing_bracket",yytext,"",currentColumnNum);
     yysuccess("closing_bracket", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -229,7 +231,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 			
 {EQUAL} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "equal_sign",yytext,"",currentColumnNum);
     yysuccess("equal_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -237,7 +239,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {NONEQUAL} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "non_equal_sign",yytext,"",currentColumnNum);
     yysuccess("non_equal_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -245,7 +247,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {AND} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "and_op",yytext,"",currentColumnNum);
     yysuccess("AND", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -253,7 +255,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {OR} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "or_op",yytext,"",currentColumnNum);
     yysuccess("OR", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -261,7 +263,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {NON} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "non_op",yytext,"",currentColumnNum);
     yysuccess("NON", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -269,7 +271,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {INFERIOR} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "inferior",yytext,"",currentColumnNum);
     yysuccess("inf_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -277,7 +279,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {SUPERIOR} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "superior",yytext,"",currentColumnNum);
     yysuccess("sup_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -285,7 +287,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {INFERIOREQUAL} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "inferior_or_equal",yytext,"",currentColumnNum);
     yysuccess("inforequal_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -293,7 +295,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {SUPERIOREQUAL} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "superior_or_equal",yytext,"",currentColumnNum);
     yysuccess("suporequal_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -301,7 +303,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {ADD} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "addition",yytext,"",currentColumnNum);
     yysuccess("add", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -309,7 +311,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {SUB} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "substraction",yytext,"",currentColumnNum);
     yysuccess("sub", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -317,7 +319,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {MULT} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "multiplication",yytext,"",currentColumnNum);
     yysuccess("mult", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -325,7 +327,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {DIV} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "division",yytext,"",currentColumnNum);
     yysuccess("div", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -333,7 +335,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {MOD} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "modulo",yytext,"",currentColumnNum);
     yysuccess("mod", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -341,7 +343,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {POWER} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "power",yytext,"",currentColumnNum);
     yysuccess("power", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -349,8 +351,8 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 
-{ASSIGNMENT} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+{ASSIGN} {
+    
     insertColumn(currentLine, "assign",yytext,"",currentColumnNum);
     yysuccess("assignment_op", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -358,7 +360,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {BOOL} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "bool_type",yytext,"",currentColumnNum);
     yysuccess("bool", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -367,7 +369,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 
 
 {INTEGER} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "int_type",yytext,"",currentColumnNum);
     yysuccess("integer", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -376,7 +378,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 
 
 {FLOAT} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "float_type",yytext,"",currentColumnNum);
     yysuccess("float", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -386,7 +388,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 
 
 {INTDEC} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "int_declaration",yytext,"",currentColumnNum);
     yysuccess("int_declaration", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -395,7 +397,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {STRDEC} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "string_declaration",yytext,"",currentColumnNum);
     yysuccess("str_declaration", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -405,7 +407,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 
 
 {BOOLDEC} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "boolean_declaration",yytext,"",currentColumnNum);
     yysuccess("bool_declaration", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -413,7 +415,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {FLTDEC} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "float_declaration",yytext,"",currentColumnNum);
     yysuccess("float_declaration",yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -422,7 +424,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 
 
 {STRUCTDEC} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "structure_declaration",yytext,"",currentColumnNum);
     yysuccess("struct_declaration", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -431,7 +433,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 
 
 {INLINECOMMENT} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "inline_comment",yytext,"",currentColumnNum);
     yysuccess("inline_comment", "", yyleng);
     currentColumnNum +=yyleng;
@@ -439,7 +441,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {BLOCCOMMENT} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "bloc_comment",yytext,"",currentColumnNum);
     yysuccess("bloc_comment", "", yyleng);
     currentColumnNum +=yyleng;
@@ -447,7 +449,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {NEWLINE} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    currentLine = insertLine(&symbolTable,currentLineNum);
     insertColumn(currentLine, "linebreak",yytext,"",currentColumnNum);
     currentColumnNum = 1;
     currentLineNum++;
@@ -455,7 +457,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 
 
 {ID} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "identifier",yytext,"",currentColumnNum);
     yysuccess("identifier", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -463,7 +465,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 }
 
 {STR} {
-    Line* currentLine = insertLine(&symbolTable,currentLineNum);
+    
     insertColumn(currentLine, "string",yytext,"",currentColumnNum);
     yysuccess("string", yytext, yyleng);
     currentColumnNum +=yyleng;
@@ -495,6 +497,10 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 int main (){
     yyin = fopen("input_test","r");
     
+    // initializing the symbols table
+    symbolTable = allocateLine();
+    currentLineNum++;
+    currentLine = symbolTable;
     
     yylex();
     
@@ -509,7 +515,7 @@ void yysuccess(const char *s, const char *token, int length) {
     if(showsuccess) {
         printf("Found %s : ", s);
         printf("\033[0;32m");
-        printf("'%s'", lexeme); 
+        printf("'%s'", token); 
         printf("\033[0m"); 
         printf(" at Ln %d Col %d \n", yylineno, currentColumnNum);
     }
