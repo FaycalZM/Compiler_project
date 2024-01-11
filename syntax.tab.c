@@ -73,27 +73,17 @@
     #include <stdlib.h>
     #include <string.h>
     #include "Struct.c"
-    //extern FILE *yyin;
-    //extern FILE *yyout;
+    extern FILE *yyin;
+    extern FILE *yyout;
     extern int yylineno;
     extern char *yytext;
     extern int yylex();
     extern void yyerror(const char *s);
-    int currentColumn = 1;
-    Ligne *Table_sym;  
-    int i =25;
-    int ri=1;
-    
-    int sauv_if_fin = 0;
-    int sauv_else =0;
-    int sauv_else_fin=0;
-    int sauv_fin_while=0;
-    int sauv_for_test=0;
-    int sauv_for_init_id=0;
-    int taille;
-    char pas[20];
+    int currentColumnNum = 1;
+    Line *Table_sym;  
 
-#line 97 "syntax.tab.c"
+
+#line 87 "syntax.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -192,13 +182,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 28 "syntax.y"
+#line 18 "syntax.y"
 
     int val_int;
     double val_float;
     char val_str[255];
 
-#line 202 "syntax.tab.c"
+#line 192 "syntax.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -576,16 +566,16 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int8 yyrline[] =
 {
-       0,    80,    80,    80,    81,    81,    81,    81,    81,    81,
-      81,    81,    81,    81,    82,    90,    90,    90,    90,    90,
-      91,    92,    92,    93,    94,    95,    95,    95,    96,    96,
-      96,    96,    97,   100,   103,   106,   110,   113,   116,   119,
-     122,   132,   136,   142,   142,   143,   151,   154,   155,   157,
-     159,   161,   163,   165,   167,   169,   171,   172,   179,   180,
-     181,   182,   183,   184,   185,   186,   187,   187,   187,   187,
-     187,   189,   191,   193,   195,   197,   200,   207
+       0,    66,    66,    66,    67,    67,    67,    67,    67,    67,
+      67,    67,    67,    67,    69,    70,    70,    70,    70,    70,
+      72,    73,    73,    74,    76,    77,    77,    77,    79,    79,
+      79,    79,    81,    82,    84,    85,    86,    88,    89,    90,
+      91,    93,    94,    96,    96,    98,    99,   101,   103,   103,
+     103,   103,   103,   103,   103,   103,   103,   105,   105,   106,
+     107,   109,   110,   111,   112,   113,   115,   115,   115,   115,
+     115,   115,   115,   115,   115,   115,   117,   117
 };
 #endif
 
@@ -1534,301 +1524,8 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 14:
-#line 82 "syntax.y"
-                               { 
-    if(get_id(Table_sym,(yyvsp[-1].val_str))!=NULL){
-        printf("Variable deja declarer : %s \n ",(yyvsp[-1].val_str));
-        YYERROR;
-    }else{
-        insertColumn(Table_sym,(yyvsp[-2].string),(yyvsp[-1].val_str),"",1); 
-    }
-    }
-#line 1548 "syntax.tab.c"
-    break;
 
-  case 32:
-#line 97 "syntax.y"
-                                          {
-    
-}
-#line 1556 "syntax.tab.c"
-    break;
-
-  case 33:
-#line 100 "syntax.y"
-                                                        {
-    
-}
-#line 1564 "syntax.tab.c"
-    break;
-
-  case 34:
-#line 103 "syntax.y"
-                                                     {
-    
-}
-#line 1572 "syntax.tab.c"
-    break;
-
-  case 35:
-#line 106 "syntax.y"
-                                      {
-    
-    
-}
-#line 1581 "syntax.tab.c"
-    break;
-
-  case 36:
-#line 110 "syntax.y"
-                                                          {
-    
-}
-#line 1589 "syntax.tab.c"
-    break;
-
-  case 37:
-#line 113 "syntax.y"
-                                           {
-    
-}
-#line 1597 "syntax.tab.c"
-    break;
-
-  case 38:
-#line 116 "syntax.y"
-                       {
-    sprintf(pas,"%d",(yyvsp[0].int_val));
-}
-#line 1605 "syntax.tab.c"
-    break;
-
-  case 39:
-#line 119 "syntax.y"
-                            {
-    
-}
-#line 1613 "syntax.tab.c"
-    break;
-
-  case 40:
-#line 122 "syntax.y"
-                               {
-    if(get_id(Table_sym,(yyvsp[-2].string))!=NULL){
-        
-    }else{
-        printf("variable non declaré : %s\n",(yyvsp[-2].string));
-        YYERROR;
-    }
-}
-#line 1626 "syntax.tab.c"
-    break;
-
-  case 41:
-#line 132 "syntax.y"
-                                             {
-    
-
-}
-#line 1635 "syntax.tab.c"
-    break;
-
-  case 42:
-#line 136 "syntax.y"
-                                                             {
-    
-}
-#line 1643 "syntax.tab.c"
-    break;
-
-  case 45:
-#line 143 "syntax.y"
-                                                              {
-    if(get_id(Table_sym,(yyvsp[-2].string))!=NULL){
-        
-    }else{
-        printf("variable non declaré : %s\n",(yyvsp[-2].string));
-        YYERROR;
-    }
-}
-#line 1656 "syntax.tab.c"
-    break;
-
-  case 46:
-#line 151 "syntax.y"
-                                                                          {
-    
-}
-#line 1664 "syntax.tab.c"
-    break;
-
-  case 48:
-#line 155 "syntax.y"
-                                                                 { 
-    strcpy( (yyval.string),(yyvsp[-1].string));
-}
-#line 1672 "syntax.tab.c"
-    break;
-
-  case 49:
-#line 157 "syntax.y"
-                                  {
-    
-}
-#line 1680 "syntax.tab.c"
-    break;
-
-  case 50:
-#line 159 "syntax.y"
-                                  {
-        
-}
-#line 1688 "syntax.tab.c"
-    break;
-
-  case 51:
-#line 161 "syntax.y"
-                    {
-    
-}
-#line 1696 "syntax.tab.c"
-    break;
-
-  case 52:
-#line 163 "syntax.y"
-                                  {
-    
-}
-#line 1704 "syntax.tab.c"
-    break;
-
-  case 53:
-#line 165 "syntax.y"
-                                 {
-    
-}
-#line 1712 "syntax.tab.c"
-    break;
-
-  case 54:
-#line 167 "syntax.y"
-                                 {
-    
-}
-#line 1720 "syntax.tab.c"
-    break;
-
-  case 55:
-#line 169 "syntax.y"
-                                   {
-    
-}
-#line 1728 "syntax.tab.c"
-    break;
-
-  case 57:
-#line 172 "syntax.y"
-         { 
-    if(get_id(Table_sym,(yyvsp[0].string))!=NULL){
-    
-    }else{
-        printf("variable non declarer : %s\n",(yyvsp[0].string));
-        YYERROR;
-    }
-}
-#line 1741 "syntax.tab.c"
-    break;
-
-  case 58:
-#line 179 "syntax.y"
-             {  }
-#line 1747 "syntax.tab.c"
-    break;
-
-  case 61:
-#line 182 "syntax.y"
-                                                                 { }
-#line 1753 "syntax.tab.c"
-    break;
-
-  case 70:
-#line 187 "syntax.y"
-                                                                                 {
-    
-}
-#line 1761 "syntax.tab.c"
-    break;
-
-  case 71:
-#line 189 "syntax.y"
-                                       {
-    
-}
-#line 1769 "syntax.tab.c"
-    break;
-
-  case 72:
-#line 191 "syntax.y"
-                                     {
-     
-}
-#line 1777 "syntax.tab.c"
-    break;
-
-  case 73:
-#line 193 "syntax.y"
-                                            {
-    
-}
-#line 1785 "syntax.tab.c"
-    break;
-
-  case 74:
-#line 195 "syntax.y"
-                                      {
-     
-}
-#line 1793 "syntax.tab.c"
-    break;
-
-  case 75:
-#line 197 "syntax.y"
-                                            {
-     
-}
-#line 1801 "syntax.tab.c"
-    break;
-
-  case 76:
-#line 200 "syntax.y"
-                                              { 
-    if(get_id(Table_sym,(yyvsp[-3].val_str))!=NULL){
-        
-    }else{
-        printf("Variable non declaré :%s\n",(yyvsp[-3].val_str));
-        YYERROR;
-    }
-}
-#line 1814 "syntax.tab.c"
-    break;
-
-  case 77:
-#line 207 "syntax.y"
-                                        {
-    if(get_id(Table_sym,(yyvsp[-3].val_str))==NULL){
-        insertColumn(Table_sym,(yyvsp[-4].string),(yyvsp[-3].val_str),"",1); 
-        
-    }else{
-        printf("Variable deja declaré :%s\n",(yyvsp[-3].val_str));
-        YYERROR;
-    }
-}
-#line 1828 "syntax.tab.c"
-    break;
-
-
-#line 1832 "syntax.tab.c"
+#line 1529 "syntax.tab.c"
 
       default: break;
     }
@@ -2060,30 +1757,21 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 216 "syntax.y"
+#line 119 "syntax.y"
 
 
 
 
 int main(int argc, char **argv) {
-    Table_sym = insertLigne(&Table_sym ,1);
+    //Table_sym = insertLine(&Table_sym ,1);
     yyin = fopen(argv[1], "r");
-    yyout = fopen("Output.txt", "r+");
-    taille=0;
     int value = yyparse();
-    int i =0;
-    /*for(i=0 ; i<taille ; i++){
-        fprintf(yyout,"%d-(%s,%s,%s,%s)\n",i+1,tab_quad[i].op,tab_quad[i].opr1,tab_quad[i].opr2,tab_quad[i].res);
-    }*/
-
-
     if(value==1){
-        printf("\nErreur syntaxique dans la ligne :%d  et la colonne : %d\n",yylineno,currentColumn);
+        printf("\nErreur syntaxique dans la ligne :%d  et la colonne : %d\n",yylineno,currentColumnNum);
     }else{
-        printf("Complation success\n");
+        printf("Compilation reussie!\n");
     }
     fclose(yyin);
-    fclose(yyout);
     return 0;
 }
 

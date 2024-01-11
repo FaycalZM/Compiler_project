@@ -5,12 +5,13 @@
     #include <string.h>
     #include "Struct.c"
     extern FILE *yyin;
+    extern FILE *yyout;
     extern int yylineno;
     extern char *yytext;
     extern int yylex();
     extern void yyerror(const char *s);
-    int currentColumn = 1;
-    Ligne *Table_sym;  
+    int currentColumnNum = 1;
+    Line *Table_sym;  
 
 %}
 
@@ -120,11 +121,11 @@ affectation : ID ASSIGN expressionAR SEMICOLON| type ID ASSIGN expressionAR SEMI
 
 
 int main(int argc, char **argv) {
-    Table_sym = insertLigne(&Table_sym ,1);
+    //Table_sym = insertLine(&Table_sym ,1);
     yyin = fopen(argv[1], "r");
     int value = yyparse();
     if(value==1){
-        printf("\nErreur syntaxique dans la ligne :%d  et la colonne : %d\n",yylineno,currentColumn);
+        printf("\nErreur syntaxique dans la ligne :%d  et la colonne : %d\n",yylineno,currentColumnNum);
     }else{
         printf("Compilation reussie!\n");
     }
