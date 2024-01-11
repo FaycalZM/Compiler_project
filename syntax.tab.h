@@ -100,7 +100,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 28 "syntax.y"
+#line 18 "syntax.y"
 
     int val_int;
     double val_float;
