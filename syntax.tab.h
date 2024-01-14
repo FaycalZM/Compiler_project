@@ -84,15 +84,18 @@ extern int yydebug;
     BOOL = 290,
     INTEGER = 291,
     FLOAT = 292,
-    INTDEC = 293,
-    STRDEC = 294,
-    BOOLDEC = 295,
-    FLTDEC = 296,
-    S = 297,
-    INLINECOMMENT = 298,
-    NEWLINE = 299,
-    STR = 300,
-    ID = 301
+    CHAR = 293,
+    INTDEC = 294,
+    STRDEC = 295,
+    BOOLDEC = 296,
+    FLTDEC = 297,
+    CHRDEC = 298,
+    STRUCTDEC = 299,
+    INLINECOMMENT = 300,
+    BLOCCOMMENT = 301,
+    NEWLINE = 302,
+    STR = 303,
+    ID = 304
   };
 #endif
 
@@ -100,13 +103,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 18 "syntax.y"
+#line 35 "syntax.y"
 
     int val_int;
     double val_float;
     char val_str[255];
+    char val_char;
 
-#line 110 "syntax.tab.h"
+#line 114 "syntax.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
