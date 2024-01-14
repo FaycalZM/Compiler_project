@@ -25,11 +25,11 @@
 
 
 /*Reserved keywords*/
-PROG "MAIN_PROG"
+PROG MAIN_PROG
 L_FOR iterate
 L_WHILE considering
-INPUT input
-OUTPUT output
+INPUT read
+OUTPUT write
 IF check
 ELSE else
 
@@ -68,8 +68,7 @@ MULT \*
 DIV div
 MOD \%
 POWER \*\*
-INCREMENT \+\+
-DECREMENT --
+
 
 
 /*Elementary instructions*/
