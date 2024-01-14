@@ -7,7 +7,8 @@
    
 
     extern int currentColumnNum;
-    int currentLineNum = 1; 	    
+    
+    extern int i; // utilisé dans l'analyseur sémantique(quadruplets)
     int showsuccess = 1;
     
     void yysuccess(const char *s, const char *token, int length);
@@ -79,7 +80,8 @@ NUMBER ([1-9][0-9]*|"0")
 INTEGER -?{NUMBER}
 FLOAT -?{NUMBER}"\."[0-9]+
 STR (\"{TEXTVALUE}\")|(\'{TEXTVALUE}\') 
-BOOL Vrai|Faux
+CHAR \'.\'
+BOOL VRAI|FAUX
 SPACE " "
 TABULATION \t
 
@@ -88,6 +90,7 @@ INTDEC int
 STRDEC str
 BOOLDEC bln
 FLTDEC flt
+CHRDEC chr
 STRUCTDEC structure
 
 /*Comments*/
@@ -97,109 +100,87 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
 %%
 
 {PROG} {
-    
-    
     yysuccess("main_program", yytext, yyleng);
-    currentColumnNum +=yyleng;    
+    currentColumnNum +=yyleng;
+    return(PROG);    
 }
 
 {L_FOR} {
-    
-    
     yysuccess("for", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(L_FOR);
 }
 {L_WHILE} {
     
     
     yysuccess("while", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(L_WHILE);
 }
 
 {INPUT} {
-    
-    
     yysuccess("input", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(INPUT);
 }
 
 {OUTPUT} {
-    
-    
     yysuccess("output", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(OUTPUT);
 }
 
 {IF} {
-    
-    
     yysuccess("check", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(IF);
 }
 
 {ELSE} {
-    
-    
     yysuccess("else", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(ELSE);    
 }
 
 
 
 {DOT} {
-    
-    
     yysuccess("dot", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(DOT);
 }
 
 {COMMA} {
-    
-    
     yysuccess("comma", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
-    
+    yylval.val_char=',';
+    return(COMMA);
 }
 
 {SEMICOLON} {
-    
-    
     yysuccess("semicolon", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    yylval.val_char=';';
+    return(SEMICOLON);
     
 }
 
 {OPENINGPARENTHESIS} {
-    
-    
     yysuccess("opening_parenthesis", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(OPENINGPARENTHESIS);
 }
 
 {CLOSINGPARENTHESIS} {
-    
-    
     yysuccess("closing_parenthesis", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(CLOSINGPARENTHESIS);
 }
 
 {OPENINGBRACE} {
-    
-    
     yysuccess("opening_brace", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(OPENINGBRACE);
 }
 
 {CLOSINGBRACE} {
@@ -207,102 +188,79 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("closing_brace", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(CLOSINGBRACE);
 }
 
 {OPENINGBRACKET} {
-    
-    
     yysuccess("opening_bracket", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(OPENINGBRACKET);
 }
 
 {CLOSINGBRACKET} {
-    
-    
     yysuccess("closing_bracket", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(CLOSINGBRACKET);
 }
 			
 {EQUAL} {
-    
-    
     yysuccess("equal_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(EQUAL);
 }
 
 {NONEQUAL} {
-    
-    
     yysuccess("non_equal_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(NONEQUAL);
 }
 
 {AND} {
-    
-    
     yysuccess("AND", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(AND);
 }
 
 {OR} {
-    
-    
     yysuccess("OR", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(OR);
 }
 
 {NON} {
-    
-    
     yysuccess("NON", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(NON);
 }
 
 {INFERIOR} {
-    
-    
     yysuccess("inf_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(INFERIOR);
 }
 
 {SUPERIOR} {
-    
-    
     yysuccess("sup_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(SUPERIOR);
 }
 
 {INFERIOREQUAL} {
-    
-    
     yysuccess("inforequal_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(INFERIOREQUAL);
 }
 
 {SUPERIOREQUAL} {
-    
-    
     yysuccess("suporequal_sign", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(SUPERIOREQUAL);
 }
 
 {ADD} {
-    
-    
     yysuccess("add", yytext, yyleng);
     currentColumnNum +=yyleng;
+    return(ADD);
     
 }
 
@@ -311,7 +269,8 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("sub", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(SUB);
+
 }
 
 {MULT} {
@@ -319,7 +278,8 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("mult", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(MULT);
+
 }
 
 {DIV} {
@@ -327,7 +287,8 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("div", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(DIV);
+
 }
 
 {MOD} {
@@ -335,7 +296,8 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("mod", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(MOD);
+
 }
 
 {POWER} {
@@ -343,7 +305,8 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("power", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(POWER);
+
 }
 
 
@@ -352,7 +315,8 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("assignment_op", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(ASSIGN);
+
 }
 
 {BOOL} {
@@ -360,7 +324,15 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("bool", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(BOOL);
+
+}
+
+{CHAR} {
+    yysuccess("char", yytext, yyleng);
+    currentColumnNum +=yyleng;
+    yylval.val_char=yytext[0];
+    return(CHAR);
 }
 
 
@@ -369,7 +341,9 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("integer", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    yylval.val_int=atoi(yytext);
+    return(INTEGER);
+
 }
 
 
@@ -378,18 +352,19 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("float", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    yylval.val_float=atof(yytext);
+    return(FLOAT);
+
 }
 
 
 
 {INTDEC} {
     
-    
     yysuccess("int_declaration", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
-    
+    strcpy( yylval.val_str ,"int");
+    return(INTDEC);
 }
 
 {STRDEC} {
@@ -397,7 +372,9 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("str_declaration", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    strcpy( yylval.val_str ,"str");
+    return(STRDEC);
+
     
 }
 
@@ -407,6 +384,9 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("bool_declaration", yytext, yyleng);
     currentColumnNum +=yyleng;
+    strcpy( yylval.val_str ,"bln");
+    return(BOOLDEC);
+
     
 }
 
@@ -415,16 +395,24 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("float_declaration",yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    strcpy( yylval.val_str ,"flt");
+    return(FLTDEC);
+
 }
 
-
+{CHRDEC} {
+    yysuccess("char_declaration",yytext, yyleng);
+    currentColumnNum +=yyleng;
+    strcpy( yylval.val_str , "chr");
+    return(CHRDEC);
+}
 {STRUCTDEC} {
     
     
     yysuccess("struct_declaration", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    return(STRUCTDEC);
+
 }
 
 
@@ -433,22 +421,22 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("inline_comment", "", yyleng);
     currentColumnNum +=yyleng;
-    
+    return(INLINECOMMENT);
+
 }
 
 {BLOCCOMMENT} {
-    
-    
     yysuccess("bloc_comment", "", yyleng);
     currentColumnNum +=yyleng;
-    
+    return(BLOCCOMMENT);
+
 }
 
 {NEWLINE} {
     
     
     currentColumnNum = 1;
-    currentLineNum++;
+
 }
 
 
@@ -457,7 +445,9 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("identifier", yytext, yyleng);
     currentColumnNum +=yyleng;
-    
+    strcpy( yylval.val_str,yytext);
+    i=100;
+    return(ID);
 }
 
 {STR} {
@@ -465,6 +455,7 @@ BLOCCOMMENT \/\*{TEXTVALUE}\*\/
     
     yysuccess("string", yytext, yyleng);
     currentColumnNum +=yyleng;
+    return(STR);
     
 } 
 

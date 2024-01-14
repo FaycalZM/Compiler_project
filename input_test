@@ -1,20 +1,22 @@
-MAIN_PROG{
+MAIN_PROG program{
 
 	/*ce programme remplit une table avec des entrées de l’utilisateur,et les affiche*/
+	
+	check (i < 5) {int i;} else check (i > 2){int j;}
+	str[i] tableau;
+	
 
-	str[10] tableau;;
-	int i;
-
-	iterate (i=1;i<10;1) {
-
-		input(tableau[i]);
-
+	iterate(i=1;i<10;1){
+	int x;
 	}
+	
+considering(i<10){
+int x = tab[i] + 2;
+input(i);
+output(y);
 
-	iterate (i=1;i<10;1) 
+}
 
-		output(tableau[i]);
-
-	}
+	
 
 }
